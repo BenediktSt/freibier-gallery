@@ -6,18 +6,23 @@ import Gallery from '../components/Gallery';
 import firebase from 'gatsby-plugin-firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import useAuthState from '../util/useAuthState';
 
 const firestore = firebase.firestore();
 const commentsRef = firestore.collection('pictures');
 const query = commentsRef
   .orderBy('createdAt', 'desc');
+let auth;
+const isBrowser = typeof window !== "undefined";
 
-const auth = firebase.auth();
+if (isBrowser) {
+  auth = firebase.auth();
+}
 const IndexPage = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(firebase);
   const [pictures, setPictures] = useState();
 
+  // load erst, nachdem auch eingelogged wurde
   React.useEffect(() => {
     if (!pictures) {
       query.get().then((querySnapshot) => {

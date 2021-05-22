@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import 'firebase/auth';
+let auth;
+const isBrowser = typeof window !== "undefined";
 
-const auth = firebase.auth();
-
+if (isBrowser) {
+  auth = firebase.auth();
+}
 export default function Header({ onAction = () => {} }) {
   return (
     <header id="header">
@@ -32,7 +35,12 @@ export default function Header({ onAction = () => {} }) {
 }
 
 function SignOut() {
-  return auth.currentUser && (
-    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+  if(auth && auth.currentUser) {
+    return (
+      <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+    )
+  }
+  return (
+    <></>
   )
 }
