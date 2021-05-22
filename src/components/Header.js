@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import firebase from 'gatsby-plugin-firebase';
+import 'firebase/auth';
+
+const auth = firebase.auth();
 
 export default function Header({ onAction = () => {} }) {
   return (
@@ -19,9 +23,16 @@ export default function Header({ onAction = () => {} }) {
             >
               About
             </a>
+            <SignOut></SignOut>
           </li>
         </ul>
       </nav>
     </header>
   );
+}
+
+function SignOut() {
+  return auth.currentUser && (
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+  )
 }

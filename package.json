@@ -1,7 +1,9 @@
 {
   "name": "freibier-gallery",
   "dependencies": {
+    "firebase": "^8.6.2",
     "gatsby": "^2.20.2",
+    "gatsby-plugin-firebase": "^0.2.0-beta.4",
     "gatsby-plugin-manifest": "^2.3.1",
     "gatsby-plugin-offline": "^3.1.0",
     "gatsby-plugin-react-helmet": "^3.2.0",
@@ -9,6 +11,7 @@
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-firebase-hooks": "^3.0.4",
     "react-helmet": "^5.2.1",
     "react-images": "^0.5.19",
     "react-scrollspy": "^3.4.2",
