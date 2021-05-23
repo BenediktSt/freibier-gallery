@@ -26,6 +26,8 @@ export default function Header({ onAction = () => {} }) {
             >
               About
             </a>
+          </li>
+          <li>
             <SignOut></SignOut>
           </li>
         </ul>
