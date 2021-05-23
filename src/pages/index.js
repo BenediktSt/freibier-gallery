@@ -12,52 +12,74 @@ const firestore = firebase.firestore();
 const commentsRef = firestore.collection('pictures');
 const query = commentsRef
   .orderBy('createdAt', 'desc');
-let auth;
-const isBrowser = typeof window !== "undefined";
+const isBrowser = typeof window !== 'undefined';
 
+let auth;
 if (isBrowser) {
   auth = firebase.auth();
 }
 const IndexPage = () => {
-  const [user, loading, error] = useAuthState(firebase);
+  const [user] = useAuthState(firebase);
   const [pictures, setPictures] = useState();
+  const [noPermission, setNoPermission] = useState(false);
 
-  // load erst, nachdem auch eingelogged wurde
-  React.useEffect(() => {
-    if (!pictures) {
-      query.get().then((querySnapshot) => {
-        const docs = querySnapshot.docs;
-        if (docs.length > 0) {
-          const data = docs
-            .map(doc => doc.data())
-            .map(pic => {
-              return {src: pic.url, thumbnail: pic.url, title: pic.author}
-            });
-          setPictures(data);
-          console.log(data)
-        }
-      });
-    }
-  }, []);
   return (
     <Layout>
-        {user && pictures ? <Gallery images={pictures} /> : <SignIn />}
+      {user ? <AppShell /> : <SignIn />}
     </Layout>
   );
-}
+
+  function AppShell() {
+    React.useEffect(() => {
+      if (user && !pictures) {
+        query.get().then((querySnapshot) => {
+          const docs = querySnapshot.docs;
+          if (docs.length > 0) {
+            const data = docs
+              .map(doc => doc.data())
+              .map(pic => {
+                return { src: pic.url, thumbnail: pic.url, title: pic.author };
+              });
+            setPictures(data);
+          }
+        }).catch(e => {
+          setNoPermission(true);
+        });
+      }
+    }, []);
+
+    return (
+      <>
+        {user && pictures && <Gallery images={pictures} />}
+        {user && noPermission && <NoPermission />}
+      </>
+    );
+  }
+};
 
 function SignIn() {
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  }
+    await auth.signInWithPopup(provider);
+  };
 
   return (
     <>
-      <button className="sign-in primary" onClick={signInWithGoogle}>Sign in with Google</button>
+      <button className='sign-in primary' onClick={signInWithGoogle}>Sign in with Google</button>
     </>
-  )
+  );
+}
+
+function NoPermission() {
+  return (
+    <>
+      <p className='no-permission'>
+        Leider hast du keinen Zugriff! <br/>
+        Falls du denkst, dass du das haben solltest, dann wende dich an ein Freibiergesicht deines Vertrauens.
+      </p>
+    </>
+  );
 }
 
 export default IndexPage;
