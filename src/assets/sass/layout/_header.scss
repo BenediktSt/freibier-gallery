@@ -126,9 +126,14 @@ body {
     nav {
       > ul {
         > li {
+          font-size: 0.9em;
           a {
-            font-size: 0.9em;
             padding: 0 1.15em;
+            // not a nice fix
+            display: none;
+          }
+          button {
+            padding: 0 1em;
           }
         }
       }
