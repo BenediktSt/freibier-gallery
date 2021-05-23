@@ -52,7 +52,7 @@ class Gallery extends Component {
     this.gotoNext();
   }
   renderGallery() {
-    const { images } = this.props;
+    const { images, lastElementRef } = this.props;
 
     if (!images) return;
 
@@ -67,6 +67,7 @@ class Gallery extends Component {
             }}
             onClick={e => this.openLightbox(i, e)}
             className="image"
+            ref={images.length === i + 1 ? lastElementRef : null}
           >
             <img
               style={{ display: 'None' }}
