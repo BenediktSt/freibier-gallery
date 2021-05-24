@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Lightbox from 'react-images';
+import LikeButton from './LikeButton';
 
 class Gallery extends Component {
   constructor() {
@@ -86,11 +87,16 @@ class Gallery extends Component {
     return <> {gallery} </>;
   }
   render() {
+    const currentImageIndex = this.state.currentImage
+    const currentImage = this.props.images[currentImageIndex]
+    const customControls = [
+      (<LikeButton likingUsers={currentImage.likes} imgRefId={currentImage.imgId}/>)
+      ]
     return (
       <>
         {this.renderGallery()}
         <Lightbox
-          currentImage={this.state.currentImage}
+          currentImage={currentImageIndex}
           images={this.props.images.map(img => {
             let caption = `${img.title}`
             if (img.desc) {
@@ -105,6 +111,7 @@ class Gallery extends Component {
           onClickPrev={this.gotoPrevious}
           onClickThumbnail={this.gotoImage}
           onClose={this.closeLightbox}
+          customControls={customControls}
         />
       </>
     );

@@ -84,4 +84,10 @@
 			@include vendor('pointer-events', 'none');
 			opacity: 0.35;
 		}
+		&.like {
+			padding: 0 1em;
+			span {
+				margin-right: .3em;
+			}
+		}
 	}

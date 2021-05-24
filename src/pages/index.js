@@ -38,9 +38,10 @@ const IndexPage = () => {
       if (docs.length > 0) {
         setLastDoc(docs[querySnapshot.docs.length - 1]);
         const data = docs
-          .map(doc => doc.data())
-          .map(pic => {
-            return { src: pic.url, thumbnail: pic.url, title: pic.author };
+          .map(doc => {
+            const picData = doc.data()
+            const likes = picData.likes ? picData.likes : []
+            return { src: picData.url, thumbnail: picData.url, title: picData.author, likes: likes, imgId: doc.id };
           });
         setPictures(prevData => {
           if (resetResult || !prevData) return data
