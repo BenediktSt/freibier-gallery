@@ -84,8 +84,9 @@
 			@include vendor('pointer-events', 'none');
 			opacity: 0.35;
 		}
-		&.like {
+		&.context-menu-button {
 			padding: 0 1em;
+			margin-right: .5em;
 			span {
 				margin-right: .3em;
 			}

@@ -38,7 +38,7 @@ const LikeButton = ({likingUsers, imgRefId}) => {
   }
 
   return (
-    <button className="like" onClick={toggleLike}>
+    <button className="context-menu-button" onClick={toggleLike}>
       <span>{likeCount}</span>
       <i className={active ? 'icon fa-heart' : 'icon fa-heart-o'} />
     </button>

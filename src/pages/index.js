@@ -41,7 +41,8 @@ const IndexPage = () => {
           .map(doc => {
             const picData = doc.data()
             const likes = picData.likes ? picData.likes : []
-            return { src: picData.url, thumbnail: picData.url, title: picData.author, likes: likes, imgId: doc.id };
+            const tags = picData.tags ? picData.tags : []
+            return { src: picData.url, thumbnail: picData.url, title: picData.author, likes: likes, tags: tags, imgId: doc.id };
           });
         setPictures(prevData => {
           if (resetResult || !prevData) return data

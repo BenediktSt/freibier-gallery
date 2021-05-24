@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Lightbox from 'react-images';
 import LikeButton from './LikeButton';
+import Tags from './Tags';
 
 class Gallery extends Component {
   constructor() {
@@ -90,7 +91,8 @@ class Gallery extends Component {
     const currentImageIndex = this.state.currentImage
     const currentImage = this.props.images[currentImageIndex]
     const customControls = [
-      (<LikeButton likingUsers={currentImage.likes} imgRefId={currentImage.imgId}/>)
+      (<LikeButton likingUsers={currentImage.likes} imgRefId={currentImage.imgId}/>),
+      (<Tags tags={currentImage.tags} imgRefId={currentImage.imgId}/>),
       ]
     return (
       <>
